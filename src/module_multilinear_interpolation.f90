@@ -184,8 +184,7 @@ contains
     end subroutine dintrv
 
     !!!Author H. Emrah Konokman
-    !! General, multi-linear interpolation
-    !  Interpolation function
+    !! General, multi-linear interpolation function
     !  If input parameter is out of lower or upper limits then extrapolation is performed.
     pure function multilinear_interpolation(xt, f, x) result(value)
 
@@ -221,7 +220,7 @@ contains
             call dintrv(xt(i)%params, x(i), ilo, ix(i,1), ix(i,2), mflag)
         end do
 
-        !!!Determine bound and opposite bound indices and calculate opposite volumes
+        !!!Determine the indeces of bound and opposite bound and calculate opposite volumes
         value = 0._rp
         vol_opp_sum = 0._rp
         do i = 1, 2**num_param
@@ -230,7 +229,7 @@ contains
             indexf = 0
             fr = num_f
             do j = 1, num_param
-                !!!indx: Index of ix (from dintrv) to get the table bound value (lower/lef or upper/right bound):
+                !!!indx: Index of ix (from dintrv) to get the table bound value (lower/lef or upper/right bound)
                 indx = abs(mod(int((i-1)/2**(num_param-j))+1,2) - 2)
                 !!!iinv: Index of ix (from dintrv) to get the table parameters to calculate opposite volume
                 iinv = abs(indx-3)
