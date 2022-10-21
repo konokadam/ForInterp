@@ -183,8 +183,10 @@ contains
 
     end subroutine dintrv
 
-    !!!Interpolation function
-    !! If input parameter is out of lower or upper limits then extrapolation is performed.
+    !!!Author H. Emrah Konokman
+    !! General, multi-linear interpolation
+    !  Interpolation function
+    !  If input parameter is out of lower or upper limits then extrapolation is performed.
     pure function multilinear_interpolation(xt, f, x) result(value)
 
         type(table_type), intent(in) :: xt(:)     !!!Table parameters
