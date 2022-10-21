@@ -9,11 +9,11 @@ program test
     real(rp) :: value
 
     allocate(xt(1)%params(5))
-    xt(1)%params = [13, 17, 23, 29, 31]
+    xt(1)%params = [13._rp, 17._rp, 23._rp, 29._rp, 31._rp]
     allocate(xt(2)%params(4))
-    xt(2)%params = [2, 6, 11, 12]
+    xt(2)%params = [2._rp, 6._rp, 11._rp, 12._rp]
     allocate(xt(3)%params(3))
-    xt(3)%params = [7, 9, 11]
+    xt(3)%params = [7._rp, 9._rp, 11._rp]
 
     allocate(f(size(xt(1)%params)*size(xt(2)%params)*size(xt(3)%params)))
     f(1) = 0.4754_rp
