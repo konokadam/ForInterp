@@ -4,6 +4,7 @@ module precision
     implicit none
     private
     integer, parameter, public :: rp = real64                    !.. working precision for reals
+    real(rp), public :: small = 1.e-12_rp
 
 end module
 
