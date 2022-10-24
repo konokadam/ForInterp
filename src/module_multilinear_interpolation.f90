@@ -185,7 +185,7 @@ contains
 
     !!!Author H. Emrah Konokman
     !! General, multi-linear interpolation function
-    !  If input parameter is out of lower or upper limits then extrapolation is performed.
+    !  
     pure function multilinear_interpolation(xt, f, x) result(value)
 
         type(table_type), intent(in) :: xt(:)     !!!Table parameters
@@ -215,8 +215,8 @@ contains
         !!!     *------------------------------*bound value
 
         !!!Find lower and upper bounds of the table
-        ilo = 1
         do i = 1, num_param
+            ilo = 1
             call dintrv(xt(i)%params, x(i), ilo, ix(i,1), ix(i,2), mflag)
         end do
 
