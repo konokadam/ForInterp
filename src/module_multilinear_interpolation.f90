@@ -233,7 +233,7 @@ contains
                 !!!indx: Index of ix (from dintrv) to get the table bound value (lower/lef or upper/right bound)
                 indx = abs(mod(int((i-1)/2**(num_param-j))+1,2) - 2)
                 !!!iinv: Index of ix (from dintrv) to get the table parameters to calculate opposite volume
-                iinv = abs(indx-3)
+                iinv = 3 - indx
                 !!!Opposite volume of the bound
                 vol_opp = vol_opp * abs(xt(j)%params(ix(j,iinv)) - x(j))
                 !!!indexf: Index of the bound value (f)
