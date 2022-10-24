@@ -31,8 +31,8 @@ program test
             do k = 1, size(table%x(3)%params)
                 icount = icount + 1
                 table%f(icount) = coeffs(1) * table%x(1)%params(i) + &
-                            coeffs(2) * table%x(2)%params(j) + &
-                            coeffs(3) * table%x(3)%params(k)
+                                  coeffs(2) * table%x(2)%params(j) + &
+                                  coeffs(3) * table%x(3)%params(k)
 
                 write(1,'(1i5,4f12.4)') icount, table%x(1)%params(i), table%x(2)%params(j), table%x(3)%params(k), table%f(icount)
             end do
