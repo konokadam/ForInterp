@@ -186,7 +186,7 @@ contains
 
     !!!Author H. Emrah Konokman
     !! General, multi-linear interpolation function
-    !  
+    !  If out of bounds then extrapolation is performed.
     pure function multilinear_interpolation(xt, f, x) result(value)
 
         type(table_type), intent(in) :: xt(:)     !!!Table parameters
@@ -197,13 +197,15 @@ contains
         integer :: ix(size(xt),2)
         integer :: mflag
         integer :: i, j, num_param, num_f
-        integer :: indx, iinv
+        integer :: indx, iopp
         integer :: ilo
         real(rp) :: vol_opp, vol_opp_sum
         integer :: indexf, fr
+        real(rp) :: sign
 
         num_param = size(x)
         num_f = size(f)
+        sign = 1._rp
 
         !!!Contribution of the bound value is proportional to the opposite volume
         !!!     *------------------------------*
@@ -221,7 +223,7 @@ contains
             call dintrv(xt(i)%params, x(i), ilo, ix(i,1), ix(i,2), mflag)
         end do
 
-        !!!Determine the indeces of bound and opposite bound and calculate opposite volumes
+        !!!Determine bound and opposite bound indices and calculate opposite volumes
         value = 0._rp
         vol_opp_sum = 0._rp
         do i = 1, 2**num_param
@@ -230,15 +232,18 @@ contains
             indexf = 0
             fr = num_f
             do j = 1, num_param
-                !!!indx: Index of ix (from dintrv) to get the table bound value (lower/lef or upper/right bound)
+                !!!indx: Index of ix (from dintrv) to get the table bound value (lower/lef or upper/right bound):
                 indx = abs(mod(int((i-1)/2**(num_param-j))+1,2) - 2)
-                !!!iinv: Index of ix (from dintrv) to get the table parameters to calculate opposite volume
-                iinv = 3 - indx
+                !!!iopp: Index of ix (from dintrv) to get the table parameters to calculate opposite volume
+                iopp = 3 - indx
                 !!!Opposite volume of the bound
-                vol_opp = vol_opp * abs(xt(j)%params(ix(j,iinv)) - x(j))
+                if(iopp == 1 .and. x(j) > xt(j)%params(ix(j,2))) sign = -1._rp
+                if(iopp == 2 .and. x(j) < xt(j)%params(ix(j,2))) sign = -1._rp
+                vol_opp = vol_opp * sign * abs(xt(j)%params(ix(j,iopp)) - x(j))
+                sign = 1._rp
                 !!!indexf: Index of the bound value (f)
                 fr = fr/size(xt(j)%params)
-                indexf = indexf + (ix(j,indx) - 1)*fr
+                indexf = indexf + (ix(j,indx) - 1) * fr
             end do
 
             indexf = indexf + 1
@@ -246,7 +251,6 @@ contains
             !!!Contribution of the bound value is proportional to opposite volume
             value = value + vol_opp * f(indexf)
             vol_opp_sum = vol_opp_sum + vol_opp
-
         end do
 
         value = value/vol_opp_sum
