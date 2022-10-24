@@ -21,7 +21,7 @@ program test
 
     !!!Write example table
     open(1, file = "example_table_3param.dat ")
-    write(1,'(4a10)') "xt(1)", "xt(2)", "xt(3)", "f"
+    write(1,'(1a5,4a12)') "No", "xt(1)", "xt(2)", "xt(3)", "f"
     icount = 0
     do i = 1, size(xt(1)%params)
         do j = 1, size(xt(2)%params)
@@ -31,14 +31,14 @@ program test
                             coeffs(2) * xt(2)%params(j) + &
                             coeffs(3) * xt(3)%params(k)
 
-                write(1,'(4f10.4)') xt(1)%params(i), xt(2)%params(j), xt(3)%params(k), f(icount)
+                write(1,'(1i5,4f12.4)') icount, xt(1)%params(i), xt(2)%params(j), xt(3)%params(k), f(icount)
             end do
         end do
     end do
 
     close(1)
 
-    x = [575.39_rp, 39.72_rp, 7.27_rp]
+    x = [2175.39_rp, 9.72_rp, 1.27_rp]
     write(*,'(1a25,3f10.2)') "Input Params: ", x
     write(*,*) "----------------------------------------------------"
     value = multilinear_interpolation(xt, f, x)
