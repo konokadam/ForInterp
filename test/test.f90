@@ -43,6 +43,7 @@ program test
 
     open(152, file = "ForInterp.log")
     passed = .true.
+    !call random_seed()
     do i = 1, 100
         call random_number(rand1)
         call random_number(rand2)
@@ -62,7 +63,7 @@ program test
             end if
         end do
         write(152,'(1a25,3a15)') "", (trim(x_(j)), j = 1, size(x))
-        write(152,*) "---------------------------------------------------------------------"
+        write(152,*) "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
         value = table%interpolation(x)
         write(152,'(1a25,1f15.2)') "Interpolated value: ", value
         value_exact = coeffs(1) * x(1) + coeffs(2) * x(2) + coeffs(3) * x(3)
