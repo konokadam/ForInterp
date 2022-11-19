@@ -45,6 +45,7 @@ program test
     passed = .true.
     !call random_seed()
     do i = 1, 100
+        !!!Generate random parameters to interpolate/extrapolate from table
         call random_number(rand1)
         call random_number(rand2)
         call random_number(rand3)
